@@ -1,22 +1,14 @@
-FROM python:3.11-slim
+#!/usr/bin/env sh
+set -e
 
-# Install Java (PySpark needs a JVM)
-RUN apt-get update && \
-    apt-get install -y openjdk-17-jre-headless && \
-    rm -rf /var/lib/apt/lists/*
+echo "=== [1/2] Fetching raw data into data/raw/ (if script exists) ==="
+if [ -f "src/fetch_data.py" ]; then
+  python src/fetch_data.py
+else
+  echo "src/fetch_data.py not found, skipping fetch step."
+fi
 
-ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
-ENV PATH="${JAVA_HOME}/bin:${PATH}"
+echo "=== [2/2] Processing data from data/raw/ to data/processed/ ==="
+python src/process_data.py
 
-# Workdir inside the container
-WORKDIR /app
-
-# Install Python dependencies
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Copy your source code (including src/)
-COPY src ./src
-
-# No entrypoint.sh, just call Python directly
-ENTRYPOINT ["python", "src/process_data.py"]
+echo "=== Done. Output written to data/processed/ ==="
