@@ -1,18 +1,22 @@
-set -euo pipefail
+FROM python:3.11-slim
 
-echo "Container started at $(date)"
+# Install Java (PySpark needs a JVM)
+RUN apt-get update && \
+    apt-get install -y openjdk-17-jre-headless && \
+    rm -rf /var/lib/apt/lists/*
 
-ls -la /data || true
+ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+ENV PATH="${JAVA_HOME}/bin:${PATH}"
 
-if [ -z "$(ls -A /data/raw 2>/dev/null)" ]; then
-  echo "/data/raw is empty — running fetch_data.py"
-  python /app/src/fetch_data.py --out-dir /data/raw
-else
-  echo "/data/raw already has files — skipping fetch"
-fi
+# Workdir inside the container
+WORKDIR /app
 
-# Run processing (always or only when new data exists — your choice)
-echo "Running processing to /data/processed"
-python /app/src/process_data.py --in-dir /data/raw --out-dir /data/processed
+# Install Python dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-echo "Done at $(date)"
+# Copy your source code (including src/)
+COPY src ./src
+
+# No entrypoint.sh, just call Python directly
+ENTRYPOINT ["python", "src/process_data.py"]
