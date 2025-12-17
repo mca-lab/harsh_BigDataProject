@@ -5,7 +5,7 @@
 This project analyzes video game sales and market trends using a Big Data pipeline built with **Python**, **PySpark**, and **Docker**. The analysis compares PlayStation performance against global market trends to answer key research questions about the gaming industry.
 
 **Research Questions:**
-- How can we use predictive analytics to forecast PlayStation sales and identify market winners?
+- How can we use predictive analytics to analyze PlayStation sales and identify market winners?
 - What are the performance differences between PlayStation and the overall gaming market in terms of genres and regional sales?
 
 ---
@@ -17,56 +17,49 @@ This project analyzes video game sales and market trends using a Big Data pipeli
 Automate downloading datasets and store them for processing.
 
 **Tasks:**
-- Choose 2+ public datasets (Kaggle, Data.gov, WHO, World Bank, UCI, etc.)
-- Write Python script to fetch datasets dynamically (URLs, APIs, Kaggle datasets)
-- Store raw datasets in `data/raw/`
-- Optional: convert datasets to Parquet for efficient storage
+- Choosed 2 public dataset from kaggle
+  -PlayStation Sales and Metadata (PS3PS4PS5) (Oct 2025).csv from gvidalguiresse/playstation-sales-and-metadata-ps3ps4ps5
+  -video_game_reviews.csv from jahnavipaliwal/video-game-reviews-and-ratings
+- Wrote a Python script to fetch datasets dynamically via Kaggle API
+- Stored raw datasets in `data/raw/`
 - Docker container ensures uniform data collection environment
+### 2. Build and Run with Docker
 
-**Deliverables:**
-- `Dockerfile` + `requirements.txt`
-- Scripts in `src/` (e.g., `fetch_data.py`)
-- `data/raw/` populated when container runs
+```bash
+# Build the Docker image
+docker build -t bigdata-project .
 
+# Run the container
+docker run --rm -v "$(pwd)/data:/app/data" bigdata-project
+```
 ---
 
 ### Module 2: Data Cleaning & Integration
 
 Prepare raw data for analysis using PySpark.
 
-**Tasks:**
-- Load raw datasets into PySpark
-- Handle missing values, inconsistent formats, duplicates
+**Tasks performed:**
+- Loaded raw datasets into PySpark
+- Handled missing values, inconsistent formats, duplicates
 - Merge, join or aggregate datasets as required
 - Store processed data in `data/processed/`
 - Docker container ensures reproducible cleaning pipeline
-
-**Deliverables:**
-- `Dockerfile` + `requirements.txt` for cleaning
-- Scripts in `src/` (e.g., `clean_data.py`)
-- `data/processed/` ready for analysis
-
 ---
 
 ### Module 3: Data Analysis & Visualization
 
-Explore and analyze cleaned datasets to answer research questions.
+Explored and analyzed cleaned datasets to answer research questions.
 
 **Tasks:**
-- Load processed data in Jupyter Notebook
-- Perform descriptive statistics, correlations, aggregations
-- Apply regression or other appropriate analysis methods
-- Visualize using Matplotlib, Seaborn, or Plotly
-- Document findings and interpretations in notebook cells
+- Loaded processed data in Jupyter Notebook
+- Performed descriptive statistics, correlations, aggregations
+- Visualized using Matplotlib, Seaborn, or Plotly
+- Documented findings and interpretations in notebook cells
 
-**Deliverables:**
-- Jupyter Notebook(s) in `/notebooks/`
-- Plots and charts illustrating key insights
-- Problem statement, explanation and conclusion in README.md
 
 ---
 
-## Technologies
+## Technologies Used
 
 | Technology | Purpose |
 | :--- | :--- |
@@ -79,7 +72,7 @@ Explore and analyze cleaned datasets to answer research questions.
 
 ---
 
-## Getting Started
+## To Run project
 
 ### 1. Clone the Repository
 
@@ -88,17 +81,8 @@ git clone https://github.com/mca-lab/harsh_BigDataProject.git
 cd harsh_BigDataProject
 ```
 
-### 2. Build and Run with Docker
 
-```bash
-# Build the Docker image
-docker build -t bigdata-project .
-
-# Run the container
-docker run --rm -v "$(pwd)/data:/app/data" bigdata-project
-```
-
-### 3. Run Analysis Locally
+### 2. To Run Analysis Locally
 
 ```bash
 # Install dependencies
@@ -128,23 +112,7 @@ harsh_BigDataProject/
 └── README.md                 # This file
 ```
 
----
 
-## Git Configuration
 
-To maintain a clean repository:
-
-- Use `.gitignore` to exclude large files, cache, and unnecessary folders
-- **DO NOT** commit raw or processed datasets (`data/raw/`, `data/processed/`)
-- **DO NOT** commit Python cache (`__pycache__`), notebook checkpoints (`.ipynb_checkpoints`), or virtual environments
-- **ONLY** commit scripts, notebooks, Docker setup, and README.md
-
----
-
-## Notes
-
-- Modules 1 and 2 require Docker for reproducibility
-- Module 3 is executed in Jupyter Notebook (no Docker required)
-- End goal: automated pipeline from data fetching → cleaning → analysis → insights
 
 
