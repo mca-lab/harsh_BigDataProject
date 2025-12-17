@@ -14,12 +14,12 @@ This project analyzes video game sales and market trends using a Big Data pipeli
 
 ### Module 1: Data Collection & Ingestion
 
-Automate downloading datasets and store them for processing.
+Automated downloading datasets and store them for processing.
 
 **Tasks:**
 - Choosed 2 public dataset from kaggle
-  -PlayStation Sales and Metadata (PS3PS4PS5) (Oct 2025).csv from gvidalguiresse/playstation-sales-and-metadata-ps3ps4ps5
-  -video_game_reviews.csv from jahnavipaliwal/video-game-reviews-and-ratings
+  - PlayStation Sales and Metadata (PS3PS4PS5) (Oct 2025).csv from gvidalguiresse/playstation-sales-and-metadata-ps3ps4ps5
+  - video_game_reviews.csv from jahnavipaliwal/video-game-reviews-and-ratings
 - Wrote a Python script to fetch datasets dynamically via Kaggle API
 - Stored raw datasets in `data/raw/`
 - Docker container ensures uniform data collection environment
@@ -36,7 +36,7 @@ docker run --rm -v "$(pwd)/data:/app/data" bigdata-project
 
 ### Module 2: Data Cleaning & Integration
 
-Prepare raw data for analysis using PySpark.
+Prepared raw data for analysis using PySpark.
 
 **Tasks performed:**
 - Loaded raw datasets into PySpark
@@ -101,15 +101,15 @@ harsh_BigDataProject/
 ├── src/
 │   ├── fetch_data.py          # Data ingestion script
 │   ├── process_data.py        # Data cleaning and processing
-│   └── analyze.ipynb          # Analysis and visualization
 ├── data/
 │   ├── raw/                   # Raw datasets
 │   └── processed/             # Processed datasets
 ├── notebooks/                 # Jupyter notebooks
+│   └── analyze.ipynb          # Analysis and visualization
 ├── dockerfile                 # Container configuration
 ├── requirements.txt           # Python dependencies
 ├── entrypoint.sh             # Container entry script
-└── README.md                 # This file
+└── README.md                 
 ```
 
 
